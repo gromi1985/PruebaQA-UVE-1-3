@@ -1,4 +1,5 @@
 import { Page, Locator } from '@playwright/test';
+import { UI_TEXT } from '../data/uiTexts';
 
 export class CartPage {
   readonly rows: Locator;
@@ -8,7 +9,7 @@ export class CartPage {
   }
 
   async open(): Promise<void> {
-    await this.page.getByRole('link', { name: 'Cart', exact: true }).click();
+    await this.page.getByRole('link', { name: UI_TEXT.cartLink, exact: true }).click();
   }
 
   itemByName(name: string): Locator {
@@ -16,6 +17,6 @@ export class CartPage {
   }
 
   async deleteItem(name: string): Promise<void> {
-    await this.itemByName(name).first().getByRole('link', { name: 'Delete' }).click();
+    await this.itemByName(name).first().getByRole('link', { name: UI_TEXT.deleteLink }).click();
   }
 }

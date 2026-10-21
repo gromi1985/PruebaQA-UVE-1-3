@@ -1,16 +1,17 @@
 import { Page, Locator } from '@playwright/test';
 
 export class ProductsPage {
-  private readonly laptopsLink: Locator;
   private readonly products: Locator;
 
   constructor(private readonly page: Page) {
-    this.laptopsLink = page.getByRole('link', { name: 'Laptops' });
     this.products = page.locator('#tbodyid .hrefch');
   }
 
-  async openFirstLaptop(): Promise<string> {
-    await this.laptopsLink.click();
+  async openCategory(category: string): Promise<void> {
+    await this.page.getByRole('link', { name: category, exact: true }).click();
+  }
+
+  async openFirstProduct(): Promise<string> {
     const first = this.products.first();
     const name = (await first.textContent())?.trim() ?? '';
     await first.click();

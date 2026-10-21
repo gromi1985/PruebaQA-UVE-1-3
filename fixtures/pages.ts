@@ -1,14 +1,20 @@
-import { test as base } from '@playwright/test';
+import { test as base } from 'playwright-bdd';
 import { LoginPage } from '../pages/LoginPage';
 import { ProductsPage } from '../pages/ProductsPage';
 import { ProductPage } from '../pages/ProductPage';
 import { CartPage } from '../pages/CartPage';
+
+type ScenarioContext = {
+  productName: string;
+  rowsBefore: number;
+};
 
 type Pages = {
   loginPage: LoginPage;
   productsPage: ProductsPage;
   productPage: ProductPage;
   cartPage: CartPage;
+  ctx: ScenarioContext;
 };
 
 export const test = base.extend<Pages>({
@@ -16,6 +22,7 @@ export const test = base.extend<Pages>({
   productsPage: async ({ page }, use) => use(new ProductsPage(page)),
   productPage: async ({ page }, use) => use(new ProductPage(page)),
   cartPage: async ({ page }, use) => use(new CartPage(page)),
+  ctx: async ({}, use) => use({ productName: '', rowsBefore: 0 }),
 });
 
 export { expect } from '@playwright/test';
