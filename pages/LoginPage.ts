@@ -23,32 +23,6 @@ export class LoginPage
          await this.page.goto('/');
      }
 
-
-    async loginNavigate():Promise<void>
-    {
-        await this.page.getByRole('link', { name: 'Log in' }).click();
-    }
-
-    async waitForPage():Promise<void>
-    {
-        await this.userInput.waitFor();
-    }
-
-    async fillUser (user: string): Promise<void>
-    {
-        await this.userInput.fill(user);
-    }
-
-    async fillPassword (password: string): Promise<void>
-    {
-        await this.passwordInput.fill(password);
-    }
-
-    async clickLogin(): Promise<void>
-    {
-        await this.submitButton.click();
-    }
-
     async login(user:string,password:string): Promise<void>{
         await this.loginLink.click();
         await this.userInput.fill(user);

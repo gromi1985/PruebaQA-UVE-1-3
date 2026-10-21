@@ -11,14 +11,12 @@ test('Selección de Laptop y Gestión de Alerta', async ({ page }) => {
   const primerLaptop = page.locator('#tbodyid a').first();
   await primerLaptop.click();
 
-   // Configurar la captura de la alerta antes de hacer clic en añadir al carrito
-  page.once('dialog', async dialog => {
-    expect(dialog.message()).toContain('Product added');
-    await dialog.accept(); 
-  });
-
-  // 4. Hacer clic en el botón "Add to cart"
+  const dialogPromise = page.waitForEvent('dialog');
   await page.getByRole('link', { name: 'Add to cart' }).click();
+  const dialog = await dialogPromise;
+
+  expect(dialog.message()).toContain('Product added');
+  await dialog.accept();
 
  
 });
